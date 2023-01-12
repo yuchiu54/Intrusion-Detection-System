@@ -10,7 +10,7 @@ class Classifier:
 	        if packet.name not in layer_table.keys():    
 	            return False    
 	        if layer_table[packet.name][1] > 0:    
-	            return False                        
+	            return True
 	        if layer_table[packet.name][0] < prev_layer:      
 	            return False                        
 	        prev_layer = layer_table[packet.name][0]
@@ -22,6 +22,7 @@ class Classifier:
         if self.is_unordered(packet):
             wrpcap('unknown_packets.pcap', packet, append=True)
             print('[ info ]: unknown packet found')
+            return
         if TCP in packet:
             TCPFlood(packet).execute()
         if UDP in packet:
